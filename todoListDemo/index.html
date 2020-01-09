@@ -10,24 +10,45 @@
       <input type="text" v-model="inputVal" /> <!-- 跟下面的Vue对象的data的inputVal双向绑定 -->
       <button v-on:click="handleBtnClk">submit</button>
       <ul>
-        <li v-for="item in list">{{item}}</li>
+        <!-- @delete是v-on:delete的简写 -->
+        <!-- :content是v-bind:content的简写 -->
+        <todo-item :content="item" v-bind:index="index" v-for="(item, index) in list" @delete="handleItemDelete">{{item}}</todo-item>
       </ul>
     </div>
     <!-- built files will be auto injected -->
     <script type="text/javascript">
-    	var app = new Vue({
-    		el: '#app',
-    		data: {
-    			list: ['todo1', 'todo2'],
-                inputVal: ''
-    		},
-            methods: {
-                handleBtnClk: function () {
-                    this.list.push(this.inputVal)
-                    this.inputVal = ''
-                }
-            }
-    	})
+
+      //局部组件
+      var TodoItem = {
+          props: ['content', 'index'],
+          template: "<li @click='handleItemClk'>{{content}}</li>",
+          methods: {
+              handleItemClk: function () {
+                  this.$emit("delete", this.index)
+              }
+          }
+      }
+
+
+      var app = new Vue({
+          el: '#app',
+          components: {
+              TodoItem: TodoItem
+          },
+          data: {
+              list: ['todo1', 'todo2'],
+              inputVal: ''
+          },
+          methods: {
+              handleBtnClk: function () {
+                  this.list.push(this.inputVal)
+                  this.inputVal = ''
+              },
+              handleItemDelete: function (index) {
+                  this.list.splice(index, 1)
+              }
+          }
+      })
     </script>
   </body>
 </html>
