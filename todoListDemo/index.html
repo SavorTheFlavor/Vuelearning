@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>travel</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="inputVal" /> <!-- 跟下面的Vue对象的data的inputVal双向绑定 -->
+      <button v-on:click="handleBtnClk">submit</button>
+      <ul>
+        <li v-for="item in list">{{item}}</li>
+      </ul>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+    	var app = new Vue({
+    		el: '#app',
+    		data: {
+    			list: ['todo1', 'todo2'],
+                inputVal: ''
+    		},
+            methods: {
+                handleBtnClk: function () {
+                    this.list.push(this.inputVal)
+                    this.inputVal = ''
+                }
+            }
+    	})
+    </script>
+  </body>
+</html>
