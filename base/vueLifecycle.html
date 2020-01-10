@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>vue life cycle</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="life">
+    </div>
+    <div id="app">
+      <input type="text" v-model="inputVal" /> <!-- 跟下面的Vue对象的data的inputVal双向绑定 -->
+      <button v-on:click="handleBtnClk">submit</button>
+      <ul>
+        <!-- @delete是v-on:delete的简写 -->
+        <!-- :content是v-bind:content的简写 -->
+        <todo-item :content="item" v-bind:index="index" v-for="(item, index) in list" @delete="handleItemDelete">{{item}}</todo-item>
+      </ul>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      //Vue生命周期函数是Vue实例在某一个时间点会自动执行的函数
+      var vm = new Vue({
+          el: "#life",
+          template:"<div>{{test}}</div>",
+          data: {
+              test: "xxxx"
+          },
+          beforeCreate: function () {
+              console.log("beforeCreate")
+          },
+          created: function () {
+              console.log("created")
+          },
+          beforeMount: function () {
+              console.log("beforeMount")
+          },
+          mounted: function () {
+              console.log("mounted")
+          }
+      })
+
+
+      // 每个vue组件也是一个Vue实例
+      var TodoItem = {
+          props: ['content', 'index'],
+          template: "<li @click='handleItemClk'>{{content}}</li>",
+          methods: {
+              handleItemClk: function () {
+                  this.$emit("delete", this.index)
+              }
+          }
+      }
+
+      // 创建一个Vue实例，整个页面由多个Vue实例拼装而成
+      var app = new Vue({
+          el: '#app',
+          components: {
+              TodoItem: TodoItem
+          },
+          data: {
+              list: ['todo1', 'todo2'],
+              inputVal: ''
+          },
+          methods: {
+              handleBtnClk: function () {
+                  this.list.push(this.inputVal)
+                  this.inputVal = ''
+              },
+              handleItemDelete: function (index) {
+                  this.list.splice(index, 1)
+              }
+          }
+      })
+    </script>
+  </body>
+</html>
