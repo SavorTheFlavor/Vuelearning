@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>模板语法</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{name + ' lmao'}}</div>
+      <div v-text="name + ' lmao'"></div>
+      <div v-html="name + ' lmao'"></div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      //Vue生命周期函数是Vue实例在某一个时间点会自动执行的函数
+      var vm = new Vue({
+          el: "#app",
+          data: {
+              name: "<h1>WTF</h1>"
+          }
+      })
+    </script>
+  </body>
+</html>
