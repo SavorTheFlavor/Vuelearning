@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue样式绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .activated {
+        color: red;
+      }
+      .activatedFurther {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div @click="handleDivClick" :class="[activated, activatedFurther]">class binding: please click me</div>
+      <div @click="handleDivClick2" :style="[styleObj, {fontSize:'50px'}]">style binding: please click me</div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      var vm = new Vue({
+          el: "#app",
+          data: {
+              activated: "",
+              activatedCount: 0,
+              styleObj: {
+                  color: "gray"
+              }
+          },
+          computed: {
+              activatedFurther: function () {
+                  if(this.activatedCount > 4){
+                      return "activatedFurther"
+                  }else{
+                      return ""
+                  }
+              }
+          },
+          methods: {
+              handleDivClick: function () {
+                  this.activated = this.activated == "" ? "activated" : ""
+                  this.activatedCount += 1
+              },
+              handleDivClick2: function () {
+                  this.styleObj.color = this.styleObj.color == "gray" ? "yellow" : "gray"
+              }
+          }
+      })
+    </script>
+  </body>
+</html>
