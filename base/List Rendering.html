@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue列表渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="(item, index) of list"
+           :key="item.id">
+        {{item.msg}} --- {{index}}
+      </div>
+
+      <hr />
+      <template v-for="(item, index) of list"
+           :key="item.id">
+        <div>
+          {{item.msg}} --- {{index}}
+        </div>
+        <div>
+          {{index}} --- {{item.msg}}
+        </div>
+      </template>
+
+      <hr/>
+      <div v-for="(item, key, index) of list"
+           :key="item.id">
+        {{item}} --- {{key}} --- {{index}}
+      </div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      var vm = new Vue({
+          el: "#app",
+          data: {
+              // 只能通过这几个方法来改变list才能改变前端的渲染，或者直接改变list的引用
+              // push pop shift unshift splice sort reverse
+              list: [
+                  {id: "xxxasd12",
+                  msg: "hey"},
+                  {id: "1231e",
+                      msg: "fffk"},
+                  {id: "qweqeq",
+                      msg: "qqqqqq"},
+                  {id: "12eqw",
+                      msg: "duaadddd"}
+              ],
+              user11: {
+                  name: "jack",
+                  age: 22,
+                  salary: "xxxx"
+              }
+          }
+      })
+    </script>
+  </body>
+</html>
