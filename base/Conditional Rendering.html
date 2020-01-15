@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue条件渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .activated {
+        color: red;
+      }
+      .activatedFurther {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 如果为false直接去掉这个div -->
+      <div v-if="show === 'a'" id="div1">a {{msg}}</div>
+      <div v-else-if="show === 'b'">b</div>
+      <div v-else>cc</div>
+      <!-- 如果为false则style display: none -->
+      <div v-show="show === 'b'" id="div2">{{msg}}</div>
+
+      <div v-if="show === 'a'">
+        username : <input key="username" /> <!-- 加个key可以防止这个dom被复用 -->
+      </div>
+      <div v-else>
+        password : <input key="password" />
+      </div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      var vm = new Vue({
+          el: "#app",
+          data: {
+              show: "b",
+              msg: "wtf"
+          }
+      })
+    </script>
+  </body>
+</html>
