@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>非父子组件传值(bus总线/发布订阅/观察者模式)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <child content="what"></child>
+      <child content="wtf"></child>
+      <div>{{total}}</div>
+    </div>
+    <script type="text/javascript">
+      //在prototype里放一个Vue实例作为总线
+      Vue.prototype.bus = new Vue()
+
+      var child = {
+          props: {
+              content: String
+          },
+          template: '<div @click="handleClk">{{selfContent}}</div>',
+          data: function () {
+              return {
+                  selfContent: this.content
+              }
+          },
+          methods: {
+              handleClk: function () {
+                  //向总线触发事件
+                  this.bus.$emit('change', this.selfContent)
+              }
+          },
+          mounted: function () {
+              var _this = this
+              //在总线绑定相应事件
+              _this.bus.$on('change', function (msg) {
+                  _this.selfContent = msg
+              })
+          }
+      }
+
+      var app = new Vue({
+          el: '#app',
+          components: {
+              child: child
+          },
+          data: {
+              total: 0
+          },
+          methods: {
+              handleNumChange: function (step) {
+                  this.total += step
+              }
+          }
+      })
+    </script>
+  </body>
+</html>

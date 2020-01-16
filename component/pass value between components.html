@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>父子组件传值</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <counter :count="22" @change="handleNumChange"></counter>
+      <counter :count="242" @change="handleNumChange"></counter>
+      <div>{{total}}</div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript">
+
+      var counter = {
+          props: ['count'],
+          template: '<div @click="handleClk">{{number}}</div>',
+          data: function () {
+              // 子组件不能修改父组件传过来的值，只能先拷贝一个副本再修改
+              return {
+                  number: this.count
+              }
+          },
+          methods: {
+              handleClk: function () {
+                  this.number += 2
+                  this.$emit('change', 2)
+              }
+          }
+      }
+
+      var app = new Vue({
+          el: '#app',
+          components: {
+              counter: counter
+          },
+          data: {
+              total: 0
+          },
+          methods: {
+              handleNumChange: function (step) {
+                  this.total += step
+              }
+          }
+      })
+    </script>
+  </body>
+</html>
