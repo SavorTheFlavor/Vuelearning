@@ -7,6 +7,7 @@
   </head>
   <body>
     <div id="app">
+      <!-- :count="0", "0"是js表达式； count="0", "0"是字符串 -->
       <counter :count="22" @change="handleNumChange"></counter>
       <counter :count="242" @change="handleNumChange"></counter>
       <div>{{total}}</div>
@@ -14,10 +15,12 @@
     <!-- built files will be auto injected -->
     <script type="text/javascript">
 
+      // 子组件
       var counter = {
           props: ['count'],
           template: '<div @click="handleClk">{{number}}</div>',
           data: function () {
+              // 单向数据流概念，父组件可以向子组件传递参数，反过来子组件不能修改父组件传过来的内容，因为一个子组件对父组件传过来的内容会影响其他子组件
               // 子组件不能修改父组件传过来的值，只能先拷贝一个副本再修改
               return {
                   number: this.count
@@ -26,11 +29,12 @@
           methods: {
               handleClk: function () {
                   this.number += 2
-                  this.$emit('change', 2)
+                  this.$emit('change', 2) // 触发"change"事件，同时传个2作为参数step
               }
           }
       }
 
+     // 父组件
       var app = new Vue({
           el: '#app',
           components: {

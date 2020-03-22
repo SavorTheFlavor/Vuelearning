@@ -12,14 +12,14 @@
       <counter :count="242" @change="handleNumChange"></counter>
       <div>{{total}}</div>
       <hr />
-      通过.native绑定原生点击事件:<counter :count="233" @click.native="handleClk"></counter>
+      通过.native给组件绑定原生点击事件:<counter :count="233" @click.native="handleClk"></counter>
     </div>
     <!-- built files will be auto injected -->
     <script type="text/javascript">
 
       var counter = {
           props: ['count'],
-          template: '<div @click="handleClk">{{number}}</div>',
+          template: '<div @click="handleClk">{{number}}</div>', // 正在dom元素上@click绑定的是原生点击事件
           data: function () {
               // 子组件不能修改父组件传过来的值，只能先拷贝一个副本再修改
               return {

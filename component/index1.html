@@ -30,7 +30,7 @@
 
       var counter = {
           template: '<div @click="handleClk">{{number}}</div>',
-          data: function () {
+          data: function () { // 必须是函数，并返回一个对象；为让每个组件对象都有一个自己独立的data
               return {
                   number: 0
               }
